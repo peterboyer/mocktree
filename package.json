@@ -1,0 +1,25 @@
+{
+	"name": "mocktree",
+	"version": "0.0.0",
+	"license": "MIT",
+	"author": "Peter Boyer <https://github.com/peterboyer>",
+	"repository": "github:peterboyer/mocktree",
+	"description": "Dependency-aware, type-safe response mocks for TypeScript.",
+	"scripts": {
+		"lint": "eslint src",
+		"lint:ts": "tsc --noEmit"
+	},
+	"type": "module",
+	"exports": "./index.js",
+	"devDependencies": {
+		"@tsconfig/node18": "^2.0.1",
+		"@tsconfig/strictest": "^2.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.59.8",
+		"@typescript-eslint/parser": "^5.59.8",
+		"eslint": "^8.42.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "^2.8.8",
+		"typescript": "^5.1.3"
+	}
+}
