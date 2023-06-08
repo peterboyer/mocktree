@@ -1,2 +1,2 @@
-export * from "../mt";
+export * from "../index.mt";
 export { hook } from "./apollo";

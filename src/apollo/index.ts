@@ -1,1 +1,1 @@
-export * as mt from "./mt";
+export * as mt from "./index.mt";

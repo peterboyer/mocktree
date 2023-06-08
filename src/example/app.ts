@@ -1,7 +1,9 @@
-import { mt } from "@/mocktree";
+import { mt } from "@/mocktree/apollo";
 import { MyComponent } from "./my-component";
 
-const $ = { MyComponent };
+const $ = {
+	MyComponent,
+};
 
 type Props = Record<never, never>;
 

@@ -13,6 +13,17 @@ export const mock = <TComponent extends Component>(
 	return {} as Collect<TComponent>;
 };
 
+type Collect<T extends Component> = (T["$queries"] extends ComponentQueries
+	? MapMockQueries<T["$queries"]>
+	: Record<never, never>) &
+	(T["$children"] extends ComponentChildren
+		? Intersect<
+				{
+					[K in keyof T["$children"]]: Collect<T["$children"][K]>;
+				}[keyof T["$children"]]
+		  >
+		: Record<never, never>);
+
 type MapMockQueries<TQueries extends ComponentQueries> = {
 	[K in keyof TQueries]:
 		| QueryResponse<TQueries[K]["data"]>
@@ -22,21 +33,6 @@ type MapMockQueries<TQueries extends ComponentQueries> = {
 };
 
 type QueryResponse<TData> = { data: TData } | { error: string };
-
-// collect can work on any key, e.g. "queries"
-type Collect<T extends Component> = (T["$queries"] extends ComponentQueries
-	? MapMockQueries<T["$queries"]>
-	: Empty) &
-	(T["$children"] extends ComponentChildren
-		? Intersect<
-				{
-					[K in keyof T["$children"]]: Collect<T["$children"][K]>;
-				}[keyof T["$children"]]
-		  >
-		: Empty);
-
-const Empty = {};
-type Empty = typeof Empty;
 
 type Intersect<T> = (T extends unknown ? (t: T) => void : never) extends (
 	t: infer R

@@ -3,12 +3,10 @@ export const describe = (name: string, fn: () => void) => {
 	void fn;
 };
 
-export const test = (name: string, fn: () => void) => {
+export const it = (name: string, fn: () => void) => {
 	void name;
 	void fn;
 };
-
-export const it = test;
 
 export const render = (component: unknown) => {
 	void component;
