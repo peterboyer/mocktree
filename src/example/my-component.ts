@@ -1,24 +1,10 @@
-import { io, createQuery } from "@/querydeps";
+import { mt } from "@/mocktree/apollo";
 import { dom } from "@/ui";
-import { gql } from "@/gql";
-import type { GetUsersData, GetUsersVariables } from "./my-component.generated";
+import { useGetUsersQuery } from "./get-users.graphql.generated";
 import { InnerComponent } from "./inner-component";
 
-export const getUsers = createQuery<
-	"GetUsers",
-	GetUsersData,
-	GetUsersVariables
->(gql`
-	query GetUsers($filters: GetUsersFilters) {
-		users(filters: $filters) {
-			id
-			name
-		}
-	}
-`);
-
 const $ = {
-	getUsers,
+	useGetUsersQuery: mt.hook<"GetUsers">()(useGetUsersQuery),
 	InnerComponent,
 };
 
@@ -27,13 +13,13 @@ type Props = {
 	disabled?: boolean;
 };
 
-export const MyComponent = io($, (props?: Props) => {
+export const MyComponent = mt.component<typeof $>()((props?: Props) => {
 	void props;
 
-	const query = $.getUsers.useQuery({ variables: {} });
+	const { data } = $.useGetUsersQuery({ variables: {} });
 	return $.InnerComponent({
 		children: [
-			dom("ul", query.data?.users.map((user) => dom("li", [user.name])).join()),
+			dom("ul", data?.users.map((user) => dom("li", [user.name])).join()),
 		],
 	});
 });

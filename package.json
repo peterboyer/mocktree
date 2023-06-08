@@ -6,8 +6,9 @@
 	"repository": "github:peterboyer/mocktree",
 	"description": "Dependency-aware, type-safe response mocks for TypeScript.",
 	"scripts": {
-		"lint": "eslint src",
-		"lint:ts": "tsc --noEmit"
+		"lint": "yarn lint:tsc && yarn lint:eslint",
+		"lint:tsc": "tsc --noEmit",
+		"lint:eslint": "eslint src"
 	},
 	"type": "module",
 	"exports": "./index.js",

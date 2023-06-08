@@ -1,22 +1,16 @@
+import { Query } from "./query";
+
+export const component =
+	<TChildren extends ComponentChildren>() =>
+	<TTarget>(target: TTarget) => {
+		return target as TTarget & { $children: TChildren };
+	};
+
 export type Component = {
-	queries?: Queries;
-	deps?: Deps;
+	$queries?: ComponentQueries;
+	$children?: ComponentChildren;
 };
 
-export type Queries = Record<string, Query>;
-export type Deps = Record<string, Component>;
+export type ComponentQueries = Record<string, Query>;
 
-export type Query<
-	TKey extends string = string,
-	TData = unknown,
-	TVariables = unknown
-> = {
-	key: TKey;
-	data: TData;
-	variables: TVariables;
-};
-
-export const io = <T, TDeps extends Deps>(deps: TDeps, fn: T) => {
-	void deps;
-	return fn as T & { deps: TDeps };
-};
+export type ComponentChildren = Record<string, Component>;

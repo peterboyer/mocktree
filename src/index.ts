@@ -1,3 +1,2 @@
-export { io } from "./component";
+export * as mt from "./mt";
 export { mock } from "./mock";
-export { createQueryModule as createQuery } from "./query-module";

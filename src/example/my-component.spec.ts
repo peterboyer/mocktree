@@ -1,16 +1,18 @@
-import { mock } from "@/querydeps";
+import { mock } from "@/mocktree";
+import { mt } from "@/mocktree/apollo";
 import { describe, it, render, renderHook } from "@/test";
-import { MyComponent, getUsers } from "./my-component";
+import { MyComponent } from "./my-component";
+import { useGetUsersQuery } from "./get-users.graphql.generated";
 
 describe("getUsers", () => {
 	it("should have correct types", () => {
-		const $ = mock(getUsers, {
+		const $ = mock(mt.hook<"GetUsers">()(useGetUsersQuery), {
 			GetUsers: { data: { users: [] } },
 		});
 		type K$ = keyof typeof $;
 		void $ as unknown as K$;
 
-		renderHook(getUsers);
+		renderHook(useGetUsersQuery);
 	});
 });
 

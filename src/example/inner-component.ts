@@ -1,57 +1,24 @@
-import { io, createQuery } from "@/querydeps";
+import { mt } from "@/mocktree/apollo";
 import { dom } from "@/ui";
-import { gql } from "@/gql";
-import type {
-	GetCitiesData,
-	GetWeatherByCityData,
-	GetWeatherByCityVariables,
-} from "./inner-component.generated";
-
-export const getCities = createQuery<"GetCities", GetCitiesData>(gql`
-	query GetCities {
-		cities {
-			id
-			name
-			location {
-				lat
-				lng
-			}
-		}
-	}
-`);
-
-export const getWeatherByCity = createQuery<
-	"GetWeatherByCity",
-	GetWeatherByCityData,
-	GetWeatherByCityVariables
->(gql`
-	query GetWeatherByCity($cityId: ID!) {
-		weather(cityId: $cityId) {
-			city {
-				id
-			}
-			currentTemperature {
-				celsius
-				fahrenheit
-			}
-		}
-	}
-`);
+import { useGetCitiesQuery } from "./get-cities.graphql.generated";
+import { useGetWeatherByCityQuery } from "./get-weather-by-city.graphql.generated";
 
 const $ = {
-	getCities,
-	getWeatherByCity,
+	useGetCitiesQuery: mt.hook<"GetCities">()(useGetCitiesQuery),
+	useGetWeatherByCityQuery: mt.hook<"GetWeatherByCity">()(
+		useGetWeatherByCityQuery
+	),
 };
 
 type Props = {
 	children?: unknown[];
 };
 
-export const InnerComponent = io($, (props: Props) => {
+export const InnerComponent = mt.component<typeof $>()((props: Props) => {
 	void props;
-	const cities = $.getCities.useQuery();
+	const cities = $.useGetCitiesQuery();
 	const currentCityId = cities.data?.cities[0]?.id ?? "";
-	const weatherByCity = $.getWeatherByCity.useQuery({
+	const weatherByCity = $.useGetWeatherByCityQuery({
 		skip: !currentCityId,
 		variables: { cityId: currentCityId },
 	});

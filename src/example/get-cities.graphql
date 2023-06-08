@@ -1,0 +1,10 @@
+query GetCities {
+	cities {
+		id
+		name
+		location {
+			lat
+			lng
+		}
+	}
+}

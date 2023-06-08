@@ -1,0 +1,11 @@
+query GetWeatherByCity($cityId: ID!) {
+	weather(cityId: $cityId) {
+		city {
+			id
+		}
+		currentTemperature {
+			celsius
+			fahrenheit
+		}
+	}
+}

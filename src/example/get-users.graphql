@@ -1,0 +1,6 @@
+query GetUsers($filters: GetUsersFilters) {
+	users(filters: $filters) {
+		id
+		name
+	}
+}

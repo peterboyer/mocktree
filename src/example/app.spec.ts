@@ -1,4 +1,4 @@
-import { mock } from "@/querydeps";
+import { mock } from "@/mocktree";
 import { it, render } from "@/test";
 import { App } from "./app";
 
